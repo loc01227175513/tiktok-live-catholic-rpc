@@ -1,0 +1,17 @@
+{
+  "name": "tiktok-live-catholic-rpc",
+  "version": "1.0.0",
+  "description": "Nhà nguyện Công giáo tương tác — TikTok Live RPC",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "tiktok-live-connector": "^2.1.0",
+    "ws": "^8.18.0"
+  }
+}

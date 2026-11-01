@@ -1,0 +1,12 @@
+{
+  "http_rpc_websocket": "passed",
+  "browser": "passed",
+  "hall_seats": 40,
+  "assets_loaded": true,
+  "desktop": true,
+  "mobile": true,
+  "obs": true,
+  "page_errors": [],
+  "tts_model": "not tested; DISABLE_TTS=1",
+  "tiktok_live": "not tested; no account connected"
+}

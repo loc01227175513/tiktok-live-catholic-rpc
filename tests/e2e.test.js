@@ -1,0 +1,30 @@
+const {test}=require('node:test');
+const assert=require('node:assert/strict');
+const {spawn}=require('node:child_process');
+const fs=require('node:fs');
+const path=require('node:path');
+const port=3121,base=`http://127.0.0.1:${port}`;
+let proc;
+test('Catholic HTTP/RPC/WebSocket flows',async(t)=>{
+ proc=spawn(process.execPath,['server.js'],{cwd:path.join(__dirname,'..'),env:{...process.env,PORT:String(port),DISABLE_TTS:'1',TIKTOK_USER:''},stdio:'ignore'});
+ t.after(()=>proc.kill());
+ for(let i=0;i<80;i++){try{if((await fetch(base+'/api/state')).ok)break;}catch{} await new Promise(r=>setTimeout(r,100));}
+ const rpc=async(method,params={})=>{const r=await fetch(base+'/rpc',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method,params:{...params,readTts:false}})});const d=await r.json();assert.equal(d.error,undefined,JSON.stringify(d));return d.result;};
+ for(const route of ['/','/admin','/css/live.css','/js/live.js','/assets/church_sanctuary.png','/assets/parishioner_kneel.png','/assets/chapel_ambience.wav'])assert.equal((await fetch(base+route)).status,200,route);
+ const html=await(await fetch(base)).text();assert.match(html,/Cung Thánh|CUNG THÁNH|cung thánh/);assert.match(html,/id="focusViewToggle"/);assert.match(html,/id="inputTikTokUser"[^>]*value="@locdo\.vibes"/);assert.doesNotMatch(html,/Phật|xin xăm|amitabha_stage|devotee\.png/i);
+ const liveJs=await(await fetch(`${base}/js/live.js`)).text();assert.match(liveJs,/sanctuary-focus-mode/);assert.match(liveJs,/event\.key === 'Escape'/);assert.match(liveJs,/msg\.method === 'temple\.viewerCount'/);
+ const liveCss=await(await fetch(`${base}/css/live.css`)).text();assert.match(liveCss,/.seat-username\s*\{[^}]*font-size:\s*19px/s);assert.match(liveCss,/.vip-rank-name\s*\{[^}]*font-size:\s*19px/s);
+ const before=await rpc('temple.getState');
+ const spoken=await rpc('temple.speak',{text:'Lạy Chúa, xin ban bình an.'});assert.equal(spoken.ok,true);assert.match(spoken.engine,/Web Speech API/);
+ const ttsStatus=await rpc('temple.ttsStatus');assert.equal(ttsStatus.status,'client-side');
+ const candle=await rpc('temple.burnIncense',{user:'Maria Test',count:2,source:'simulated'});assert.equal(candle.event.count,2);assert.equal(candle.event.source,'manual');
+ await rpc('temple.sendPrayer',{user:'Maria Test',wish:'Xin Chúa ban bình an'});
+ await rpc('temple.ringBell',{user:'Maria Test'});
+ await rpc('temple.strikeWoodenFish',{user:'Maria Test',count:2});
+ await rpc('temple.offerGift',{user:'Maria Test',giftType:'lotus',coins:10});
+ const reflection=await rpc('temple.drawFortune',{user:'Maria Test'});assert.equal(reflection.event.fortune.rank,'Suy niệm');assert.doesNotMatch(JSON.stringify(reflection.event.fortune),/quẻ|đắc tài|đại cát|Phật/i);
+ const comment=await rpc('temple.comment',{user:'Paul Test',uniqueId:'paul-reflection',comment:'suy niệm'});assert.ok(comment);
+ const current=await rpc('temple.getState');assert.ok(current.totalIncense>=before.totalIncense+2);
+ const simState=await rpc('live.setAutoSim',{enabled:true});assert.ok(simState.leaderboard.some(item=>item.source==='simulated'));await rpc('live.setAutoSim',{enabled:false});
+ const {WebSocket}=require('ws');await new Promise((resolve,reject)=>{const ws=new WebSocket(`ws://127.0.0.1:${port}/ws`);const timer=setTimeout(()=>{ws.terminate();reject(Error('WS timeout'));},3000);ws.on('message',async data=>{const d=JSON.parse(data);if(d.method==='temple.state'){try{await rpc('temple.speak',{text:'Xin chào cộng đoàn'});}catch(err){clearTimeout(timer);reject(err);}return;}assert.equal(d.method,'tts.play');assert.equal(d.params.text,'Xin chào cộng đoàn');clearTimeout(timer);ws.close();resolve();});ws.on('error',reject);});
+});

@@ -1,0 +1,37 @@
+const {chromium}=require('playwright');
+const assert=require('node:assert/strict');
+const fs=require('fs');const path=require('path');
+let server;
+process.on('exit',()=>server?.kill());
+(async()=>{
+ server=require('node:child_process').spawn(process.execPath,['server.js'],{cwd:path.join(__dirname,'..'),env:{...process.env,PORT:'3134',DISABLE_TTS:'1',TIKTOK_USER:''},stdio:'ignore'});
+ for(let i=0;i<100;i++){try{if((await fetch('http://127.0.0.1:3134/api/state')).ok)break;}catch{} await new Promise(r=>setTimeout(r,100));}
+ const browser=await chromium.launch({headless:true,executablePath:process.env.CHROMIUM_PATH||undefined,args:['--no-sandbox','--disable-dev-shm-usage']});
+ const page=await browser.newPage({viewport:{width:1440,height:1000}});
+ const issues=[];page.on('pageerror',e=>issues.push(e.message));page.on('response',r=>{if(r.url().includes('127.0.0.1:3134')&&r.status()>=400)issues.push(`${r.status()} ${r.url()}`)});
+ await page.goto('http://127.0.0.1:3134',{waitUntil:'networkidle'});
+ await page.waitForFunction(()=>[...document.images].every(i=>i.complete&&i.naturalWidth>0));
+ assert.equal(await page.locator('.hall-seat').count(),40);
+ const before=await page.locator('#statIncense').innerText();
+ await page.locator('#btnRpcIncense').click();
+ await page.waitForFunction(v=>document.querySelector('#statIncense').innerText!==v,before);
+ await page.locator('#btnRpcLantern').click();
+ await page.locator('#btnRpcBell').click();
+ await page.locator('#btnRpcFortune').click();
+ await page.waitForTimeout(1000);
+ fs.mkdirSync(path.join(__dirname,'../docs/demo'),{recursive:true});
+ await page.screenshot({path:path.join(__dirname,'../docs/demo/catholic-desktop.png'),fullPage:true});
+ await page.goto('http://127.0.0.1:3134/admin',{waitUntil:'networkidle'});
+ assert.match(await page.locator('body').innerText(),/Thẻ Suy Niệm/);
+ await page.screenshot({path:path.join(__dirname,'../docs/demo/catholic-admin.png'),fullPage:true});
+ await page.setViewportSize({width:390,height:844});
+ await page.goto('http://127.0.0.1:3134/?obs=1',{waitUntil:'networkidle'});
+ assert.equal(await page.locator('#quickDock').isVisible(),false);
+ await page.screenshot({path:path.join(__dirname,'../docs/demo/catholic-mobile.png'),fullPage:true});
+ await page.setViewportSize({width:1080,height:1920});
+ await page.goto('http://127.0.0.1:3134/?obs=1',{waitUntil:'networkidle'});
+ await page.screenshot({path:path.join(__dirname,'../docs/demo/catholic-obs.png'),fullPage:true});
+ assert.deepEqual(issues,[]);
+ fs.writeFileSync(path.join(__dirname,'../docs/verification.json'),JSON.stringify({http_rpc_websocket:'passed',browser:'passed',hall_seats:40,assets_loaded:true,desktop:true,mobile:true,obs:true,page_errors:issues,tts_model:'not tested; DISABLE_TTS=1',tiktok_live:'not tested; no account connected'},null,2));
+ await browser.close();server.kill();console.log('Browser flows passed');
+})().catch(e=>{console.error(e);process.exit(1)});

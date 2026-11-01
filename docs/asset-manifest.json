@@ -1,0 +1,32 @@
+[
+  {
+    "id": "sanctuary",
+    "path": "/workspace/scratch/7d177f05ea8a/generated_images/exec-8dffddff-9815-4e55-aa04-5dc334a6449b.png",
+    "prompt": "Create a rich polished realistic 3D rendered Catholic church sanctuary background for a vertical livestream game, portrait 9:16, 1024x1792. Symmetrical straight-on view, large crucifix with respectful sculpted Christ in upper center above a white marble altar, tall Gothic stained-glass windows, ivory stone arches, warm gold candlelight, red carpet center aisle receding toward altar. White lilies in simple vases. Lower 45 percent is clear polished floor and carpet for overlay congregation sprites; no people, no pews blocking foreground, no Buddhist symbols or lotus, incense bowl, dragons, wheels, cushions, no text or letters or logo. Elegant believable proportions, luminous solemn church atmosphere, readable composition."
+  },
+  {
+    "id": "kneel",
+    "path": "/workspace/scratch/7d177f05ea8a/generated_images/exec-30f2d23d-ffd6-49ad-bd33-366a3873f988.png",
+    "prompt": "Full body standalone game character sprite, transparent background. One original adult Vietnamese Catholic woman seen directly FROM BEHIND facing away into scene, hair in neat low bun, ivory long sleeve blouse and ankle-length navy blue modest skirt, kneeling upright on both knees with hands joined at chest in prayer, shoes subtly behind, respectful natural pose. Polished realistic 3D game render, soft warm rimlight, no object or scenery, centered with generous transparent margin, entire body visible. No Buddhist robe, no halo, no text."
+  },
+  {
+    "id": "walk1",
+    "path": "/workspace/scratch/7d177f05ea8a/generated_images/exec-a7b58e04-68f8-45a2-86b5-ab107596d096.png",
+    "prompt": "Full body standalone game character sprite, transparent background. One original adult Vietnamese Catholic woman seen directly FROM BEHIND facing away, neat low bun, ivory long sleeve blouse, ankle-length navy skirt and dark flat shoes, walking slowly forward with left foot slightly ahead, arms naturally at sides. Polished realistic 3D game render soft warm rimlight, no scenery or other objects, centered entire body visible, generous transparent margin. No Buddhist robe, halo or text."
+  },
+  {
+    "id": "walk2",
+    "path": "/workspace/scratch/7d177f05ea8a/generated_images/exec-ba7ace50-fd1e-4dea-8962-e16074d13c46.png",
+    "prompt": "Full body standalone game character sprite, transparent background. One original adult Vietnamese Catholic woman seen directly FROM BEHIND facing away, neat low bun, ivory long sleeve blouse, ankle-length navy skirt and dark flat shoes, walking slowly forward with right foot slightly ahead, arms naturally at sides. Polished realistic 3D game render soft warm rimlight, no scenery or other objects, centered entire body visible, generous transparent margin. No Buddhist robe, halo or text."
+  },
+  {
+    "id": "genuflect",
+    "path": "/workspace/scratch/7d177f05ea8a/generated_images/exec-210136d4-0409-45a5-ba8b-68f3de779b59.png",
+    "prompt": "Full body standalone game character sprite, transparent background. One original adult Vietnamese Catholic woman seen directly FROM BEHIND facing away, neat low bun, ivory long sleeve blouse, ankle-length navy skirt, dark flats, lowering onto one knee in a respectful Catholic genuflection, upright torso, hands joined at chest. Polished realistic 3D game render soft warm rimlight, no scenery, centered entire body visible, generous transparent margin. No Buddhist robe, halo, text or floor."
+  },
+  {
+    "id": "bow",
+    "path": "/workspace/scratch/7d177f05ea8a/generated_images/exec-01db7a2e-e8ba-46ab-b90a-858beb4155a4.png",
+    "prompt": "Full body standalone game character sprite, transparent background. One original adult Vietnamese Catholic woman seen directly FROM BEHIND facing away, neat low bun, ivory long sleeve blouse, ankle-length navy skirt, kneeling on both knees with joined hands at chest, head and shoulders gently bowed in quiet Catholic prayer. Body upright, NOT prostrate, no forehead touching ground. Polished realistic 3D game render soft warm rimlight, no scenery, centered entire body visible, generous transparent margin. No Buddhist robe, halo or text."
+  }
+]

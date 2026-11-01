@@ -1,0 +1,67 @@
+{
+  "referenced_assets": [
+    "chapel_ambience.wav",
+    "church_sanctuary.png",
+    "parishioner_bow.png",
+    "parishioner_genuflect.png",
+    "parishioner_kneel.png",
+    "parishioner_walk1.png",
+    "parishioner_walk2.png"
+  ],
+  "missing": [],
+  "assets": [
+    {
+      "file": "church_sanctuary.png",
+      "size": [
+        948,
+        1659
+      ],
+      "mode": "RGB"
+    },
+    {
+      "file": "parishioner_bow.png",
+      "size": [
+        320,
+        384
+      ],
+      "mode": "RGBA",
+      "transparent": true
+    },
+    {
+      "file": "parishioner_genuflect.png",
+      "size": [
+        320,
+        384
+      ],
+      "mode": "RGBA",
+      "transparent": true
+    },
+    {
+      "file": "parishioner_kneel.png",
+      "size": [
+        320,
+        384
+      ],
+      "mode": "RGBA",
+      "transparent": true
+    },
+    {
+      "file": "parishioner_walk1.png",
+      "size": [
+        320,
+        384
+      ],
+      "mode": "RGBA",
+      "transparent": true
+    },
+    {
+      "file": "parishioner_walk2.png",
+      "size": [
+        320,
+        384
+      ],
+      "mode": "RGBA",
+      "transparent": true
+    }
+  ]
+}
